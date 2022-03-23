@@ -1,4 +1,4 @@
-## rust-smt-ir
+## rust-smt-ir-examples
 
 This project provides examples of using a Rust intermediate representation (IR) in Rust for
 [SMT-LIB](http://smtlib.cs.uiowa.edu/about.shtml).  To demonstrate the benefit to the automated
