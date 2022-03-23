@@ -1,8 +1,8 @@
 ## rust-smt-ir-examples
 
-This project provides examples of using a Rust intermediate representation (IR) in Rust for
-[SMT-LIB](http://smtlib.cs.uiowa.edu/about.shtml).  To demonstrate the benefit to the automated
-reasoning community, the project includes three sample applications:
+This project provides examples of using a [rust-smt-ir](https://github.com/awslabs/rust-smt-ir), 
+a Rust intermediate representation (IR) for [SMT-LIB](http://smtlib.cs.uiowa.edu/about.shtml).
+To demonstrate the benefit to the automated reasoning community, the project includes three sample applications:
 
  1. A tool to perform homomorphic transformations on SMT-LIB queries,
  with a focus on string theory. String function applications are
