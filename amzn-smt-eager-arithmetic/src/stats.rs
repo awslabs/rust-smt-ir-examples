@@ -69,7 +69,7 @@ impl Stats {
         let (mut k, mut equality_logic) = (0, self.mu_b.is_zero());
         let bad = || {
             unreachable!(
-                "only terms of the form `({<=,<,=,>=,>} (+ ...) ...)` are added to constraints"
+                "{}", "only terms of the form `({<=,<,=,>=,>} (+ ...) ...)` are added to constraints"
             )
         };
         for t in self.constraints.iter() {
