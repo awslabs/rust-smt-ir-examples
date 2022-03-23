@@ -1,0 +1,10 @@
+/.cargo
+/target/
+
+# custom
+cargo-project/*.gnf
+cargo-project/tmp
+cargo-project/*.dot
+cargo-project/*.png
+
+cargo-project/test_data/
