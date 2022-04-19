@@ -9,7 +9,7 @@ handling the data processing and calling of AWS SageMaker endpoints (``scripts/g
 
 ## The Rust Project
 
-The Rust project herein uses a [SMT parser](https://github.com/awslabs/rust-smt-ir/tree/main/cargo-project/amzn-smt-ir)
+The Rust project herein uses a [SMT parser](https://github.com/awslabs/rust-smt-ir/tree/main/amzn-smt-ir)
 to count the number of occurances of String predicates in SMT problem files. These are referred to
 as ``offline features`` in the predictive models.
 
