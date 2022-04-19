@@ -23,7 +23,7 @@ To demonstrate the benefit to the automated reasoning community, the project inc
  problems.  The tool and its usage are described
  [here](amzn-smt-eager-arithmetic).
  The IR is described/documented
- [here](amzn-smt-ir).
+ [here](https://github.com/awslabs/rust-smt-ir/tree/main/amzn-smt-ir).
 
  3. A tool to translate between an older "dialect" of SMT into the
  current standard. The tool and its usage are described
