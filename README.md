@@ -14,13 +14,13 @@ To demonstrate the benefit to the automated reasoning community, the project inc
  query. The string properties themselves and the string functions they
  depend on are described in the
  [string_fcts](amzn-smt-string-transformer/src/string_fcts.rs)
- module.  The tool and its usage is described
+ module.  The tool and its usage are described
  [here](amzn-smt-string-transformer).
 
  2. A tool to transform SMT-LIB queries in supported subsets of the
  language into
  [SAT](https://en.wikipedia.org/wiki/Boolean_satisfiability_problem)
- problems.  The tool and its usage is described
+ problems.  The tool and its usage are described
  [here](amzn-smt-eager-arithmetic).
  The IR is described/documented
  [here](amzn-smt-ir).
