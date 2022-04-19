@@ -10,7 +10,7 @@ bits, if a solution exists at all (i.e. the formula is satisfiable). Given `n`, 
 are encoded as bit-vectors of size `n`, and arithmetic operations are encoded as arbitrary-precision
 bit-vector operations. Finally, the resulting boolean formula is converted to CNF and passed to a
 SAT solver. For more details, see
-[the paper](reports-archive.adm.cs.cmu.edu/anon/2003/CMU-CS-03-210.pdf) upon which this technique is
+[the paper](http://reports-archive.adm.cs.cmu.edu/anon/2003/CMU-CS-03-210.pdf) upon which this technique is
 based.
 
 ### Normalization
