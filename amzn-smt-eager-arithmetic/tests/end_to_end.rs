@@ -3,7 +3,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use amzn_smt_eager_arithmetic::solve_with_varisat;
-use amzn_smt_ir::{
+use aws_smt_ir::{
     logic::{all::*, arith::*},
     model::Model,
     Constant, Symbol, Term,

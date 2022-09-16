@@ -2,7 +2,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use super::Constant;
-use amzn_smt_ir::{
+use aws_smt_ir::{
     logic::{
         all::{Op, ALL},
         ArithOp,
@@ -448,7 +448,7 @@ impl Visitor<ALL> for StatsVisitor<'_> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use amzn_smt_ir::Script;
+    use aws_smt_ir::Script;
 
     #[test]
     fn multiple_partitions() -> anyhow::Result<()> {

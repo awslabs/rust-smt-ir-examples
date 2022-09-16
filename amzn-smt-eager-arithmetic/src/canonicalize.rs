@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use super::int_term;
-use amzn_smt_ir::{
+use aws_smt_ir::{
     chained,
     fold::{Fold, IntraLogicFolder, SuperFold},
     logic::{
@@ -302,7 +302,7 @@ impl IntraLogicFolder<ALL> for Canonicalizer<'_> {
                 }
                 _ => anyhow::bail!("term invalid in LIA: {}", Mul(args)),
             },
-            Arith(Gte(args)) => chained(args, |l, r| normalize_gte(l, r)),
+            Arith(Gte(args)) => chained(args, normalize_gte),
             Arith(Gt(args)) => chained(args, |l, r| !normalize_gte(r, l)),
             Arith(Lte(args)) => chained(args, |l, r| normalize_gte(r, l)),
             Arith(Lt(args)) => chained(args, |l, r| !normalize_gte(l, r)),
@@ -318,7 +318,7 @@ impl IntraLogicFolder<ALL> for Canonicalizer<'_> {
 
 #[test]
 fn canonicalization() {
-    use amzn_smt_ir::Script;
+    use aws_smt_ir::Script;
     let assert_canonical = |orig: &str, canon: &str| {
         assert_eq!(
             Script::<Term>::parse(orig.as_bytes())

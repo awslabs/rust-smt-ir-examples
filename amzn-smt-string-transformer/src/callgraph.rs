@@ -4,7 +4,7 @@
 
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-use amzn_smt_ir::*;
+use aws_smt_ir::*;
 use std::collections::{BTreeSet, HashMap, HashSet};
 
 use crate::forest::*;

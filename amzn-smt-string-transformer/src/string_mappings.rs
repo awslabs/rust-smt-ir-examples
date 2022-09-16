@@ -122,7 +122,7 @@ pub fn gen_string_keep_ranges(
     // iterate over the string to be mapped, character by character
     for c in s.chars() {
         // if we're keeping ints (decimal)
-        match (keep_ints, c.is_digit(10)) {
+        match (keep_ints, c.is_ascii_digit()) {
             (KeepInts::AsInts, true) => {
                 to_ret.push('0');
                 break;
@@ -266,7 +266,7 @@ fn fix_repeated_string(
             }
         }
         // respect ints properties if required
-        if matches!(keep_ints, KeepInts::AsInts | KeepInts::ExactInts) && retry_char.is_digit(10) {
+        if matches!(keep_ints, KeepInts::AsInts | KeepInts::ExactInts) && retry_char.is_ascii_digit() {
             retry_ind = (retry_ind + 1) % to_ret.len();
             if retry_ind == 0 {
                 retry_add += 1;
@@ -732,7 +732,7 @@ pub fn gen_string_freeforall(_s: &str, char_map: &mut CharMap) -> Result<String,
             continue;
         }
         // if we're tried 20 offsets from current char, try increasing repetitions (i.e. increasing the length)
-        if cur_offset > 20 || char::from_u32(next_char) == None {
+        if cur_offset > 20 || char::from_u32(next_char).is_none() {
             cur_offset = 1;
             cur_reps += 1;
         }

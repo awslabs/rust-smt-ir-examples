@@ -15,7 +15,7 @@ edition = "2018"
 publish = false
 
 [dependencies]
-amzn-smt-ir = { git = "https://github.com/awslabs/rust-smt-ir", version = "0.1" }
+aws-smt-ir = "0.1"
 anyhow = "1.0"
 either = "1.6"
 ena = "0.14"
@@ -30,7 +30,7 @@ thiserror = "1.0"
 criterion = "0.3"
 
 [features]
-varisat = ["amzn-smt-ir/varisat"]
+varisat = ["aws-smt-ir/varisat"]
 
 [[bench]]
 name = "presburger_encoding"

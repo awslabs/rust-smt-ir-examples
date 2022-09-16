@@ -3,8 +3,8 @@
 #![warn(rust_2018_idioms)]
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-use amzn_smt_ir::{
-    ackerman::ackermanize,
+use aws_smt_ir::{
+    ackermann::ackermannize,
     cnf::{self, into_cnf, CnfTerm},
     eliminate::eliminate_lets,
     logic::{
@@ -38,7 +38,7 @@ mod stats;
 /// # fn main() -> anyhow::Result<()> {
 /// use std::{io, fs::File};
 /// use either::Either;
-/// use amzn_smt_ir::{Symbol, Term, Constant};
+/// use aws_smt_ir::{Symbol, Term, Constant};
 /// use amzn_smt_eager_arithmetic::solve;
 /// let problem = "(declare-const x Int) (assert (>= x 5))";
 /// match solve(problem.as_bytes(), "kissat")? {
@@ -58,27 +58,27 @@ pub fn solve(
     smt: impl io::BufRead,
     solver: impl AsRef<OsStr>,
 ) -> anyhow::Result<Option<Model<ALL>>> {
-    let (cnf, mapping, encoder, reconstruct_ackermanized) = encode_inner(smt)?;
+    let (cnf, mapping, encoder, reconstruct_ackermannized) = encode_inner(smt)?;
     let start = Instant::now();
     let assignment = cnf.solve_with(solver)?;
     println!("Solve time: {:?}", start.elapsed());
-    reconstruct(assignment, mapping, encoder, reconstruct_ackermanized)
+    reconstruct(assignment, mapping, encoder, reconstruct_ackermannized)
 }
 
 #[cfg(feature = "varisat")]
 pub fn solve_with_varisat(smt: impl io::BufRead) -> anyhow::Result<Option<Model<ALL>>> {
-    let (cnf, mapping, encoder, reconstruct_ackermanized) = encode_inner(smt)?;
+    let (cnf, mapping, encoder, reconstruct_ackermannized) = encode_inner(smt)?;
     let start = Instant::now();
     let assignment = cnf.solve_with_varisat()?;
     println!("Solve time: {:?}", start.elapsed());
-    reconstruct(assignment, mapping, encoder, reconstruct_ackermanized)
+    reconstruct(assignment, mapping, encoder, reconstruct_ackermannized)
 }
 
 fn reconstruct(
     satisfying_assignment: Option<HashMap<cnf::Variable, bool>>,
     mapping: HashMap<BoolVariable, cnf::Variable>,
     encoder: Encoder,
-    reconstruct_ackermanized: impl FnOnce(Model<ALL>) -> Model<ALL>,
+    reconstruct_ackermannized: impl FnOnce(Model<ALL>) -> Model<ALL>,
 ) -> anyhow::Result<Option<Model<ALL>>> {
     let rev_map: HashMap<_, _> = mapping.into_iter().map(|(a, b)| (b, a)).collect();
     let satisfying_assignment = satisfying_assignment.map(|assignment| {
@@ -95,7 +95,7 @@ fn reconstruct(
                 let sort = val.sort(&mut Default::default())?;
                 model.define_const(sym, sort, val);
             }
-            Ok(Some(reconstruct_ackermanized(model)))
+            Ok(Some(reconstruct_ackermannized(model)))
         }
         None => Ok(None),
     }
@@ -122,7 +122,7 @@ fn encode_inner(
     let mut ctx = Ctx::default();
     // TODO: is it necessary to eliminate lets up-front?
     let uflia = eliminate_lets(&mut ctx, uflia)?;
-    let (script, reconstruct_ackermanized_funcs) = ackermanize(&mut ctx, uflia)?;
+    let (script, reconstruct_ackermannized_funcs) = ackermannize(&mut ctx, uflia)?;
     let (encoded, encoder) = encoding::Encoder::encode(ctx, script)?;
     let (cnf, mapping) = into_cnf(encoded)?;
     let mapping = mapping
@@ -143,7 +143,7 @@ fn encode_inner(
         cnf.num_clauses()
     );
     println!("Encoding time: {:?}", start.elapsed());
-    Ok((cnf, mapping, encoder, reconstruct_ackermanized_funcs))
+    Ok((cnf, mapping, encoder, reconstruct_ackermannized_funcs))
 }
 
 fn int_term(t: &Term) -> Option<(&Numeral, bool)> {
@@ -176,7 +176,7 @@ impl fmt::Display for BoolVariable {
 }
 
 impl<L: Logic> Sorted<L> for BoolVariable {
-    fn sort(&self, _: &mut Ctx) -> Result<ISort, amzn_smt_ir::UnknownSort<Term<L>>> {
+    fn sort(&self, _: &mut Ctx) -> Result<ISort, aws_smt_ir::UnknownSort<Term<L>>> {
         Ok(ISort::bool())
     }
 }

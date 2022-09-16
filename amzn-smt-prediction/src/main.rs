@@ -4,7 +4,7 @@ use std::io::prelude::*;
 use std::io::{BufReader, BufWriter};
 use std::process::exit;
 
-use amzn_smt_ir::{
+use aws_smt_ir::{
     logic::{all::Op, StringOp, ALL},
     visit::{ControlFlow, SuperVisit, Visitor},
     IOp, Script, Term,

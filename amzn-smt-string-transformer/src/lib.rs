@@ -54,7 +54,7 @@ pub mod subformula_parser;
 pub mod transpiler;
 pub mod transpiler_visitors;
 
-use amzn_smt_ir::{logic::ALL, Command as IRCommand, Term as IRTerm};
+use aws_smt_ir::{logic::ALL, Command as IRCommand, Term as IRTerm};
 use transpiler::IdentType;
 
 type Term = IRTerm<ALL>;
@@ -73,7 +73,7 @@ trait SortExt {
 }
 
 /// implement the SortExt trait for Sort; this adds access to the get_type member function
-impl SortExt for amzn_smt_ir::Sort {
+impl SortExt for aws_smt_ir::Sort {
     /// get the IdentType corresponding to the Sort
     fn get_type(&self) -> IdentType {
         match self.sym_str() {

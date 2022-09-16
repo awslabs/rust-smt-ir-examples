@@ -1,6 +1,6 @@
 //! Module of structs and related functions used for mapping metadata to/from JSON files
 //! Metadata includes the various maps built during the transpilation process
-use amzn_smt_ir::ISymbol;
+use aws_smt_ir::ISymbol;
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use serde::{Deserialize, Serialize};

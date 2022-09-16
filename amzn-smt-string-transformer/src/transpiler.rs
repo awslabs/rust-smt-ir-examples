@@ -23,9 +23,9 @@ use crate::mapping_tools::*;
 use crate::string_fcts::*;
 use crate::string_mappings;
 use crate::transpiler_visitors::*;
-use amzn_smt_ir::fold::IntraLogicFolder;
-use amzn_smt_ir::IConst;
-use amzn_smt_ir::{
+use aws_smt_ir::fold::IntraLogicFolder;
+use aws_smt_ir::IConst;
+use aws_smt_ir::{
     fold::Fold, logic::ALL, Command as IRCommand, ISymbol, ParseError, Script, Term as IRTerm,
 };
 use smt2parser::concrete::*;
@@ -476,12 +476,7 @@ impl CharMap {
 
     /// get the range that the given character is in (None if not in a range)
     pub fn get_range_for_char(&self, c: char) -> Option<&RangeParams> {
-        for r in &self.ranges {
-            if c >= r.start_char && c <= r.end_char {
-                return Some(r);
-            }
-        }
-        None
+	self.ranges.iter().find(|&r| c >= r.start_char && c <= r.end_char)
     }
 
     /// given a character that has been mapped, get the mapped range that this
@@ -824,7 +819,7 @@ fn populate_ranges(char_map: &CharMap) -> Vec<(char, char)> {
         let mut placeholder_char = range.start_char;
         let mut found_char = false;
         for range_char in range.start_char..range.end_char {
-            if char_map.char_map.get(&range_char) == None {
+            if char_map.char_map.get(&range_char).is_none() {
                 if char_map
                     .illegal_chars
                     .contains(&char::from_u32(offset).unwrap())

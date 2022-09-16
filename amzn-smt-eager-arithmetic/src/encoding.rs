@@ -5,7 +5,7 @@ use super::{
     Variable,
 };
 use crate::{canonicalize::Canonicalizer, int_term, Bit};
-use amzn_smt_ir::{
+use aws_smt_ir::{
     args,
     fold::{Fold, InterLogicFolder, SuperFold},
     logic::{
@@ -581,7 +581,7 @@ impl Encoder {
                             }
                         })
                         .sum::<isize>();
-                    let abs = Constant::Numeral(Numeral::from(val.abs() as usize)).into();
+                    let abs = Constant::Numeral(Numeral::from(val.unsigned_abs())).into();
                     let val = if val >= 0 {
                         abs
                     } else {
@@ -602,6 +602,7 @@ impl Encoder {
 }
 
 #[allow(clippy::many_single_char_names)]
+#[allow(clippy::nonminimal_bool)]
 fn adder(x: Reduced, y: Reduced, carry_in: Reduced) -> (Reduced, Reduced) {
     match (carry_in.const_bool(), x.const_bool(), y.const_bool()) {
         (Ok(cin), Ok(x), Ok(y)) => {

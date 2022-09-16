@@ -6,7 +6,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use crate::{transpiler::IdentType, Command, SortExt, Term};
-use amzn_smt_ir::{
+use aws_smt_ir::{
     fold::{Fold, IntraLogicFolder, SuperFold},
     logic::ALL,
     CoreOp, ISort, ISymbol, IVar,

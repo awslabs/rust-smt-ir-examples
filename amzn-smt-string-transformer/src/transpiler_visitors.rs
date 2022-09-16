@@ -8,10 +8,10 @@
 
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-use amzn_smt_ir::args::Arguments;
-use amzn_smt_ir::fold::{IntraLogicFolder, SuperFold};
-use amzn_smt_ir::logic::ALL;
-use amzn_smt_ir::{CoreOp, IConst, ISort, ISymbol, IVar};
+use aws_smt_ir::args::Arguments;
+use aws_smt_ir::fold::{IntraLogicFolder, SuperFold};
+use aws_smt_ir::logic::ALL;
+use aws_smt_ir::{CoreOp, IConst, ISort, ISymbol, IVar};
 use smt2parser::concrete::*;
 use std::collections::hash_map::Entry;
 use std::collections::{BTreeSet, HashMap, HashSet};
