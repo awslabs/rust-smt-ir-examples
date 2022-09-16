@@ -266,7 +266,9 @@ fn fix_repeated_string(
             }
         }
         // respect ints properties if required
-        if matches!(keep_ints, KeepInts::AsInts | KeepInts::ExactInts) && retry_char.is_ascii_digit() {
+        if matches!(keep_ints, KeepInts::AsInts | KeepInts::ExactInts)
+            && retry_char.is_ascii_digit()
+        {
             retry_ind = (retry_ind + 1) % to_ret.len();
             if retry_ind == 0 {
                 retry_add += 1;

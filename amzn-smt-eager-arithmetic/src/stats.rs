@@ -2,6 +2,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use super::Constant;
+use anyhow::anyhow;
 use aws_smt_ir::{
     logic::{
         all::{Op, ALL},
@@ -11,7 +12,6 @@ use aws_smt_ir::{
     visit::{ControlFlow, SuperVisit, Visit, Visitor},
     CoreOp, Ctx, IConst, ICoreOp, IOp, ISort, ISymbol, IVar, QualIdentifier, Sorted, Term,
 };
-use anyhow::anyhow;
 use ena::unify::{InPlaceUnificationTable, NoError, UnifyKey, UnifyValue};
 use num_traits::Zero;
 use smt2parser::Numeral;
@@ -69,7 +69,8 @@ impl Stats {
         let (mut k, mut equality_logic) = (0, self.mu_b.is_zero());
         let bad = || {
             unreachable!(
-                "{}", "only terms of the form `({<=,<,=,>=,>} (+ ...) ...)` are added to constraints"
+                "{}",
+                "only terms of the form `({<=,<,=,>=,>} (+ ...) ...)` are added to constraints"
             )
         };
         for t in self.constraints.iter() {

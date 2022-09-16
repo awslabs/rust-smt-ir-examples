@@ -476,7 +476,9 @@ impl CharMap {
 
     /// get the range that the given character is in (None if not in a range)
     pub fn get_range_for_char(&self, c: char) -> Option<&RangeParams> {
-	self.ranges.iter().find(|&r| c >= r.start_char && c <= r.end_char)
+        self.ranges
+            .iter()
+            .find(|&r| c >= r.start_char && c <= r.end_char)
     }
 
     /// given a character that has been mapped, get the mapped range that this

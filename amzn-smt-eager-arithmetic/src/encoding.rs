@@ -5,6 +5,7 @@ use super::{
     Variable,
 };
 use crate::{canonicalize::Canonicalizer, int_term, Bit};
+use anyhow::{anyhow, bail, Context};
 use aws_smt_ir::{
     args,
     fold::{Fold, InterLogicFolder, SuperFold},
@@ -17,7 +18,6 @@ use aws_smt_ir::{
     CoreOp, Ctx, ICoreOp, IOp, IQuantifier, ISort, ISymbol, IVar, Logic, QualIdentifier, Script,
     Sorted, UnknownSort, Void, IUF,
 };
-use anyhow::{anyhow, bail, Context};
 use either::Either;
 use itertools::Itertools;
 use num_traits::{ToPrimitive, Zero};

@@ -3,6 +3,7 @@
 #![warn(rust_2018_idioms)]
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
+use anyhow::{anyhow, Context};
 use aws_smt_ir::{
     ackermann::ackermannize,
     cnf::{self, into_cnf, CnfTerm},
@@ -14,7 +15,6 @@ use aws_smt_ir::{
     model::Model,
     Ctx, ISort, IVar, Logic, Script, Sorted, Term, UnknownSort,
 };
-use anyhow::{anyhow, Context};
 use either::Either;
 use smt2parser::{concrete::Constant, Numeral};
 use std::{
