@@ -121,7 +121,7 @@ pub fn reconstruct_and_add_assertions(
             // skip the next line since it's a pointless paren that breaks the parse
             // if there is an error this means there is no next line, so bail with SAT: no model
             let read_res = transformed_reader.read_line(&mut line);
-            if line == "sat\n" || matches!(read_res, Err(_)) {
+            if line == "sat\n" || read_res.is_err() {
                 return Ok(ReconstructResult::SatNoModel);
             }
 

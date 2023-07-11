@@ -15,7 +15,7 @@ edition = "2018"
 publish = false
 
 [dependencies]
-aws-smt-ir = "0.1"
+aws-smt-ir = "0.2"
 anyhow = "1.0"
 either = "1.6"
 ena = "0.14"

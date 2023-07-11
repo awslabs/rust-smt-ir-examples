@@ -876,7 +876,7 @@ pub fn transform_ast(
     output.extend(rest_commands);
 
     // propagate all information throughout the callgraph
-    if matches!(identify_builder.callgraph.propagate_all(), Err(_)) {
+    if identify_builder.callgraph.propagate_all().is_err() {
         panic!("Error in information propagation: bailing out");
     }
 

@@ -15,6 +15,6 @@ authors = ["Ellen Arteca <ellen.arteca@gmail.com>", "Bruno Dutertre <dutebrun@am
 publish = false
 
 [dependencies]
-aws-smt-ir = "0.1"
+aws-smt-ir = "0.2"
 smt2parser = "0.6.1"
 

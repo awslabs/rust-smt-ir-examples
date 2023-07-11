@@ -77,7 +77,6 @@ impl IdentifyStringsBuilder {
             self.char_level_substring_vars
                 .extend(char_level_substrings_required(
                     op.args()
-                        .into_iter()
                         .cloned()
                         .collect::<Vec<Term>>()
                         .as_slice(),

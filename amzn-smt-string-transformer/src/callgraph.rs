@@ -182,7 +182,7 @@ impl CallGraph {
         varname: &ISymbol,
     ) -> Result<Vec<ISymbol>, AffectErr> {
         let var_id = self.symbol_map.get(varname);
-        if matches!(var_id, None) {
+        if var_id.is_none() {
             return Err(AffectErr::InvalidNode);
         }
         let var_id = var_id.unwrap();

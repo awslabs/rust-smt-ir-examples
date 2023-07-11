@@ -181,13 +181,11 @@ pub fn gen_string_keep_ranges(
         consider_substrings,
         len_bool,
     );
-    if matches!(repeat_fix, Err(_)) {
-        // if there was an error bail and map char-to-char
-        to_ret = map_string_char_to_char(s, char_map).unwrap();
+    if let Ok(to_ret) = repeat_fix {
+        to_ret
     } else {
-        to_ret = repeat_fix.unwrap();
+        map_string_char_to_char(s, char_map).unwrap()
     }
-    to_ret
 }
 
 /// check to see if a mapped string is already in the map.
