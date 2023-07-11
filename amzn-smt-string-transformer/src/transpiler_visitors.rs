@@ -76,10 +76,7 @@ impl IdentifyStringsBuilder {
             let mut string_lits = BTreeSet::<String>::new();
             self.char_level_substring_vars
                 .extend(char_level_substrings_required(
-                    op.args()
-                        .cloned()
-                        .collect::<Vec<Term>>()
-                        .as_slice(),
+                    op.args().cloned().collect::<Vec<Term>>().as_slice(),
                     sfc,
                     &self.alpha_renaming_map,
                 ));

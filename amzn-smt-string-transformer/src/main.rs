@@ -42,7 +42,9 @@ fn find_subformulae(args: Opt) {
 
     let file_name = path.file_stem().unwrap();
 
-    if output_json.print_json_to_file(&[file_name.to_str().unwrap(), "_recon.json"].join("")).is_err()
+    if output_json
+        .print_json_to_file(&[file_name.to_str().unwrap(), "_recon.json"].join(""))
+        .is_err()
     {
         println!("Error printing subformulas to output file");
     }
