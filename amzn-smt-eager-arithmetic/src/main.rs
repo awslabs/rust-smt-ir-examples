@@ -1,42 +1,43 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use anyhow::{bail, Context};
+use clap::{Parser, Subcommand};
 use std::{
     ffi::OsString,
     fs, io,
     path::{Path, PathBuf},
     process::{Command, Stdio},
 };
-use structopt::StructOpt;
 
-#[derive(Debug, StructOpt)]
-enum Config {
-    Encode(EncodeCfg),
-    Solve(SolveCfg),
+#[derive(Debug, Parser)]
+struct Cli {
+    /// Operation
+    #[command(subcommand)]
+    operation: Operation,
 }
 
-#[derive(Debug, StructOpt)]
-struct EncodeCfg {
-    /// SMT-LIB file to encode.
-    #[structopt(parse(from_os_str))]
-    instance: PathBuf,
-    /// Write generated CNF encoding to a file.
-    #[structopt(parse(from_os_str))]
-    cnf_outfile: PathBuf,
-}
-
-#[derive(Debug, StructOpt)]
-struct SolveCfg {
-    /// SMT-LIB file to solve.
-    #[structopt(parse(from_os_str))]
-    instance: PathBuf,
-    /// SAT solver to use.
-    #[structopt(long, default_value = "kissat")]
-    solver: OsString,
+#[derive(Debug, Subcommand)]
+enum Operation {
+    Encode {
+        /// SMT-LIB file to encode.
+        #[arg(long)]
+        instance: PathBuf,
+        /// Output file for the CNF encoding.
+        #[arg(long)]
+        cnf_outfile: PathBuf,
+    },
+    Solve {
+        /// SMT-LIB file to solve.
+        #[arg(long)]
+        instance: PathBuf,
+        /// SAT solver to use.
+        #[arg(long, default_value = "kissat")]
+        solver: OsString,
+    },
 }
 
 fn main() -> anyhow::Result<()> {
-    let config = Config::from_args();
+    let config = Cli::parse();
 
     let reader = |path: &Path| -> anyhow::Result<_> {
         let file = fs::File::open(path)
@@ -44,11 +45,11 @@ fn main() -> anyhow::Result<()> {
         Ok(io::BufReader::new(file))
     };
 
-    match config {
-        Config::Encode(EncodeCfg {
+    match config.operation {
+        Operation::Encode {
             instance,
             cnf_outfile,
-        }) => {
+        } => {
             println!("Encoding {}", instance.display());
             let problem = reader(instance.as_ref())?;
             // Spawn minisat to simplify the generated CNF. The simplified formula it generates
@@ -70,7 +71,7 @@ fn main() -> anyhow::Result<()> {
                 bail!("minisat exited with non-success status {}", exit)
             }
         }
-        Config::Solve(SolveCfg { instance, solver }) => {
+        Operation::Solve { instance, solver } => {
             println!("Solving {}", instance.display());
             let problem = reader(instance.as_ref())?;
             match amzn_smt_eager_arithmetic::solve(problem, solver)? {

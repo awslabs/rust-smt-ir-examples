@@ -8,13 +8,13 @@ use aws_smt_ir::{
         all::{Op, ALL},
         ArithOp,
     },
+    smt2parser::Numeral,
     try_break,
     visit::{ControlFlow, SuperVisit, Visit, Visitor},
     CoreOp, Ctx, IConst, ICoreOp, IOp, ISort, ISymbol, IVar, QualIdentifier, Sorted, Term,
 };
 use ena::unify::{InPlaceUnificationTable, NoError, UnifyKey, UnifyValue};
 use num_traits::Zero;
-use smt2parser::Numeral;
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},

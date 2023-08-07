@@ -15,11 +15,10 @@ authors = ["Byron Cook <byron@amazon.com>", "Ellen Arteca <ellen.arteca@gmail.co
 publish = false
 
 [dependencies]
-aws-smt-ir = "0.2"
-smt2parser = "0.6.1"
+aws-smt-ir = "0.3.0"
+clap = { version = "4.3", features = ["derive"]}
 serde = "1.0"
 serde_json = "1.0"
-structopt = "0.3"
 
 
 # See more Cargo.toml keys and their definitions: https://doc.rust-lang.org/cargo/reference/manifest.html

@@ -13,6 +13,7 @@ use aws_smt_ir::{
         all::{Op, ALL},
         ArithOp, BvOp,
     },
+    smt2parser::Numeral,
     try_chained,
     visit::ControlFlow,
     CoreOp, Ctx, ICoreOp, IOp, IQuantifier, ISort, ISymbol, IVar, Logic, QualIdentifier, Script,
@@ -21,7 +22,6 @@ use aws_smt_ir::{
 use either::Either;
 use itertools::Itertools;
 use num_traits::{ToPrimitive, Zero};
-use smt2parser::Numeral;
 use std::{collections::HashMap, num::NonZeroU64};
 
 #[derive(Clone, Copy, Default, Debug, Hash, PartialEq, Eq)]

@@ -2,36 +2,46 @@
 // SPDX-License-Identifier: Apache-2.0
 use crate::reconstruct_tools::ReconstructResult;
 use amzn_smt_string_transformer::*;
+use clap::{Parser, Subcommand};
 use std::{fs, io, path::PathBuf};
-use structopt::StructOpt;
 
-#[derive(Debug, StructOpt)]
-#[structopt(
-    name = "transpiler_args",
-    about = "Arguments for the SMTLIB transpiler"
-)]
-struct Opt {
-    /// mode (convert, reconstruct, subformulas)
-    #[structopt(long)]
-    mode: String,
+#[derive(Debug, Parser)]
+struct Cli {
+    /// Operation
+    #[command(subcommand)]
+    operation: Operation,
+}
 
-    /// type of mapping (char-to-char or no-reconstruct)
-    #[structopt(long, required_if("mode", "convert"))]
-    mapping: Option<String>,
+#[derive(Debug, Subcommand)]
+enum Operation {
+    Convert {
+        /// type of mapping: either char-to-char or no-reconstruct
+        #[arg(long, default_value = "no-reconstruct")]
+        mapping: String,
 
-    /// input file
-    #[structopt(long, short, parse(from_os_str))]
-    input_file: PathBuf,
+        /// whether or not to use global map
+        #[arg(long)]
+        use_global_map: bool,
 
-    /// flag for whether or not to use global map
-    #[structopt(long, required_if("mode", "convert"))]
-    use_global_map: Option<bool>,
+        /// input file
+        #[arg(long)]
+        input_file: PathBuf,
+    },
+    Reconstruct {
+        /// input file
+        #[arg(long)]
+        input_file: PathBuf,
+    },
+    SubFormula {
+        /// input file
+        #[arg(long)]
+        input_file: PathBuf,
+    },
 }
 
 // -----------------------------------------------------------------------
 
-fn find_subformulae(args: Opt) {
-    let path = args.input_file;
+fn find_subformulae(path: PathBuf) {
     let file = fs::File::open(path.clone());
     let file = file.expect("Error reading input file");
     let reader = io::BufReader::new(file);
@@ -50,10 +60,7 @@ fn find_subformulae(args: Opt) {
     }
 }
 
-fn convert(args: Opt) {
-    let use_global_map = args.use_global_map.unwrap(); // this arg is required for "convert" mode
-    let mapping_type = args.mapping.unwrap(); // also required for "convert" mode
-    let path = args.input_file;
+fn convert(path: PathBuf, use_global_map: bool, mapping_type: &str) {
     let file = fs::File::open(path.clone());
     let file = file.expect("Error reading input file");
     let reader = io::BufReader::new(file);
@@ -62,7 +69,7 @@ fn convert(args: Opt) {
     let (mut output, mapping_obj) = transpiler::transform_ast(
         problem,
         use_global_map,
-        match mapping_type.as_str() {
+        match mapping_type {
             "char-to-char" => true,
             "no-reconstruct" => false,
             _ => {
@@ -113,8 +120,7 @@ fn convert(args: Opt) {
         .expect("Error printing to mapping file");
 }
 
-fn reconstruct(args: Opt) {
-    let path = args.input_file;
+fn reconstruct(path: PathBuf) {
     let (file_name, file_ext) = (path.file_stem().unwrap(), path.extension().unwrap());
     let file_name = path.parent().unwrap().join(file_name);
     let recon_output = reconstruct_tools::reconstruct_and_add_assertions(
@@ -145,23 +151,15 @@ fn reconstruct(args: Opt) {
 }
 
 fn main() {
-    let opt = Opt::from_args();
+    let options = Cli::parse();
 
-    match opt.mode.as_str() {
-        "convert" => {
-            convert(opt);
-        }
-        "reconstruct" => {
-            reconstruct(opt);
-        }
-        "subformula" => {
-            find_subformulae(opt);
-        }
-        _ => {
-            panic!(
-                "Expected mode \"convert\" or \"reconstruct\" or \"subformula\", received: {:?}",
-                opt.mode
-            );
-        }
+    match options.operation {
+        Operation::Convert {
+            mapping,
+            use_global_map,
+            input_file,
+        } => convert(input_file, use_global_map, &mapping),
+        Operation::Reconstruct { input_file } => reconstruct(input_file),
+        Operation::SubFormula { input_file } => find_subformulae(input_file),
     }
 }

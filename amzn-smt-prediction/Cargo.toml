@@ -17,7 +17,6 @@ publish = false
 [dependencies]
 # Example third-party import
 # serde = "^1.0"
-aws-smt-ir = "0.2"
-smt2parser = "0.6.1"
+aws-smt-ir = "0.3.0"
 
 # See more Cargo.toml keys and their definitions: https://doc.rust-lang.org/cargo/reference/manifest.html

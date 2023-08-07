@@ -11,8 +11,8 @@
 use aws_smt_ir::args::Arguments;
 use aws_smt_ir::fold::{IntraLogicFolder, SuperFold};
 use aws_smt_ir::logic::ALL;
+use aws_smt_ir::smt2parser::concrete::*;
 use aws_smt_ir::{CoreOp, IConst, ISort, ISymbol, IVar};
-use smt2parser::concrete::*;
 use std::collections::hash_map::Entry;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::convert::Infallible;
@@ -172,7 +172,7 @@ pub fn new_assert_equal(new_var_name: ISymbol, t: &Term) -> Command {
 /// For example visitors, see
 /// [this example](https://github.com/facebookincubator/smt2utils/blob/master/smt2parser/src/rewriter.rs#L841).
 impl IntraLogicFolder<ALL> for IdentifyStringsBuilder {
-    type Error = smt2parser::Error;
+    type Error = aws_smt_ir::smt2parser::Error;
 
     /// visit function applications
     /// if the function being applied is one of the string function, then it is

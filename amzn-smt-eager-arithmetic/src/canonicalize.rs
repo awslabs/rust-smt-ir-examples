@@ -8,13 +8,13 @@ use aws_smt_ir::{
         all::{Op, ALL},
         ArithOp,
     },
-    pairwise, Constant, CoreOp, Ctx, HashOrdered, ICoreOp, ILet, IOp, ISort, Sorted, Term,
-    UnknownSort,
+    pairwise,
+    smt2parser::Numeral,
+    Constant, CoreOp, Ctx, HashOrdered, ICoreOp, ILet, IOp, ISort, Sorted, Term, UnknownSort,
 };
 use either::Either;
 use num_traits::{One, Zero};
 use smallvec::{smallvec, SmallVec};
-use smt2parser::Numeral;
 use std::{collections::BTreeMap, iter};
 
 pub struct Canonicalizer<'a> {

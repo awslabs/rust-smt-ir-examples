@@ -15,19 +15,18 @@ edition = "2018"
 publish = false
 
 [dependencies]
-aws-smt-ir = "0.2"
+aws-smt-ir = "0.3"
 anyhow = "1.0"
 either = "1.6"
 ena = "0.14"
-itertools = "0.10"
+itertools = "0.11.0"
 num-traits = "0.2"
 smallvec = { version = "1.6", features = ["union"] }
-smt2parser = "0.6.1"
-structopt = "0.3"
+clap = { version = "4.3", features = ["derive"]}
 thiserror = "1.0"
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = "0.5.1"
 
 [features]
 varisat = ["aws-smt-ir/varisat"]

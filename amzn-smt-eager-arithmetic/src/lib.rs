@@ -13,10 +13,10 @@ use aws_smt_ir::{
         arith::*,
     },
     model::Model,
+    smt2parser::{concrete::Constant, Numeral},
     Ctx, ISort, IVar, Logic, Script, Sorted, Term, UnknownSort,
 };
 use either::Either;
-use smt2parser::{concrete::Constant, Numeral};
 use std::{
     collections::HashMap,
     convert::TryFrom,
@@ -127,8 +127,8 @@ fn encode_inner(
     let (cnf, mapping) = into_cnf(encoded)?;
     let mapping = mapping
         .into_iter()
-        .filter_map(|(v, s)| match v.as_ref() {
-            Variable::Bool(v) => Some((*v, s)),
+        .map(|(v, s)| match v.as_ref() {
+            Variable::Bool(v) => (*v, s),
             v => {
                 unreachable!(
                     "no non-integer variables end up in CNF passed to SAT solver: {}",

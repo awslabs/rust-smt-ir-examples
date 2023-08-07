@@ -6,9 +6,9 @@
 // SPDX-License-Identifier: Apache-2.0
 use aws_smt_ir::fold::IntraLogicFolder;
 use aws_smt_ir::fold::SuperFold;
+use aws_smt_ir::smt2parser::concrete::*;
 use aws_smt_ir::{fold::Fold, logic::*, Command as IRCommand, ParseError, Script, Term as IRTerm};
 use aws_smt_ir::{IConst, ISymbol, IVar, Index, IUF};
-use smt2parser::concrete::*;
 
 use std::convert::Infallible;
 use std::convert::TryInto;

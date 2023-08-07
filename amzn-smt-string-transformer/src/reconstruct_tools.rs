@@ -5,9 +5,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 use crate::{mapping_tools, Command, Term};
+use aws_smt_ir::smt2parser::concrete::*;
+use aws_smt_ir::smt2parser::CommandStream;
 use aws_smt_ir::{FunctionDec, ISymbol};
-use smt2parser::concrete::*;
-use smt2parser::CommandStream;
 use std::collections::HashMap;
 use std::{fs, io, io::BufRead};
 

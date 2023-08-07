@@ -24,11 +24,11 @@ use crate::string_fcts::*;
 use crate::string_mappings;
 use crate::transpiler_visitors::*;
 use aws_smt_ir::fold::IntraLogicFolder;
+use aws_smt_ir::smt2parser::concrete::*;
 use aws_smt_ir::IConst;
 use aws_smt_ir::{
     fold::Fold, logic::ALL, Command as IRCommand, ISymbol, ParseError, Script, Term as IRTerm,
 };
-use smt2parser::concrete::*;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::convert::Infallible;
 
@@ -196,7 +196,7 @@ impl StringSetProperties {
 fn string_consts_affected(
     cur_sym: &ISymbol,
     // var_defn: &Term,
-    callgraph: &mut CallGraph,
+    callgraph: &CallGraph,
 ) -> Result<BTreeSet<String>, AffectErr> {
     let string_consts = &callgraph.get_data_for_var(cur_sym)?.string_lits_built_from;
     Ok(string_consts.clone())
@@ -342,7 +342,7 @@ fn replace_args_in_term(string_map: HashMap<String, String>, var_defn: &Term) ->
 fn compute_replacement_strings(
     cur_sym: &ISymbol,
     var_defn: &Term,
-    callgraph: &mut CallGraph,
+    callgraph: &CallGraph,
     char_map: &mut CharMap,
 ) -> Result<Option<Term>, AffectErr> {
     // first, iterate over the list and see what properties we need to maintain
@@ -882,7 +882,7 @@ pub fn transform_ast(
 
     // now, replace the strings
     let mut replace_terms: HashMap<Term, Term> = HashMap::new();
-    let mut callgraph = identify_builder.callgraph.clone();
+    let callgraph = identify_builder.callgraph.clone();
     let partitions = identify_builder.callgraph.partitions();
 
     let char_level_substring_vars = identify_builder
@@ -924,7 +924,7 @@ pub fn transform_ast(
         if let Some(var_defn) = identify_builder.string_var_defn_map.get(sym) {
             // transpile strings related to the current string var
             if let Ok(opt_sym_replace_term) =
-                compute_replacement_strings(sym, var_defn, &mut callgraph, &mut char_map)
+                compute_replacement_strings(sym, var_defn, &callgraph, &mut char_map)
             {
                 if let Some(sym_replace_term) = opt_sym_replace_term {
                     replace_terms.insert(var_defn.clone(), sym_replace_term);

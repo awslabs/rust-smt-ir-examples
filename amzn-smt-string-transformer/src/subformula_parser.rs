@@ -59,7 +59,7 @@ impl StringSubformulaCountBuilder {
 
 /// AST visitor functionality for StringSubformulaCountBuilder
 impl IntraLogicFolder<ALL> for StringSubformulaCountBuilder {
-    type Error = smt2parser::Error;
+    type Error = aws_smt_ir::smt2parser::Error;
 
     /// if we are going to remap the string variables, keep track of assertions of what they're equal to
     /// also, if we are asserting a new_varX (and we're remapping the string vars), then we sub in whatever that
