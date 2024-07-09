@@ -30,4 +30,4 @@ smdebug-rulesconfig==1.0.1
 toml==0.10.2
 typing-extensions==3.10.0.0
 urllib3==1.26.19
-zipp==3.5.0
+zipp==3.19.1
