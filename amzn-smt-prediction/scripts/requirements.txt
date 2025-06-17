@@ -16,7 +16,7 @@ pathos==0.2.8
 Pillow==10.3.0
 pox==0.3.0
 ppft==1.6.6.4
-protobuf==3.18.3
+protobuf==4.25.8
 protobuf3-to-dict==0.1.5
 pyparsing==2.4.7
 python-dateutil==2.8.2
